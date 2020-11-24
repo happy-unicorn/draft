@@ -1,25 +1,25 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useRef } from "react";
+import { EditorState } from "draft-js";
+import Editor from "draft-js-plugins-editor";
+import "draft-js/dist/Draft.css";
 
-function App() {
+const App = () => {
+  const [editorState, setEditorState] = useState(() => EditorState.createEmpty());
+  const editor = useRef(null);
+
+  const onChangeEditor = (newEditorState) => {
+     setEditorState(newEditorState);
+     console.log(newEditorState);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Editor
+      ref={editor}
+      editorState={editorState}
+      plugins={[]}
+      onChange={onChangeEditor}
+    />
   );
-}
+};
 
 export default App;
