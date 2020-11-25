@@ -2,18 +2,32 @@ import React, { useRef } from "react";
 import styled from "styled-components";
 import { Editor } from "draft-js";
 
-const Block = styled.div`
+const Component = styled.div`
   display: flex;
   flex-direction: row;
   min-height: 40px;
+  padding: 10px 0;
 `;
 const Plus = styled.div`
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-end;
   height: 40px;
-  width: 40px;  
-  font-size: 25px;
+  width: 30px;  
+  padding-right: 10px;
+  font-size: 30px;
+  color: lightgray;
+  cursor: pointer;
+  user-select: none;
+  
+  &:hover {
+    color: gray;
+  }
+`;
+const Dots = styled.div`
+  padding-top: 1px;
+  font-size: 30px;
+  line-height: 8px;
   color: lightgray;
   
   &:hover {
@@ -22,9 +36,10 @@ const Plus = styled.div`
 `;
 const Wrapper = styled.div`
   flex-grow: 1;
+  padding-left: 10px;
 `;
 
-const EditableBlock = ({ state, addEditableBlock, onChangeEditableBlock }) => {
+const EditableBlock = ({ state, dragHandleProps, addEditableBlock, onChangeEditableBlock }) => {
   const editor = useRef(null);
 
   const onClickBlock = () => {
@@ -32,10 +47,15 @@ const EditableBlock = ({ state, addEditableBlock, onChangeEditableBlock }) => {
   };
 
   return (
-    <Block>
-      <Plus onClick={addEditableBlock}>
+    <Component>
+      <Plus onClick={addEditableBlock}>                 {/* ТАКОЕ ТОЛЬКО НА ЭТАПЕ ПРОТОТИПА! */}
         +
       </Plus>
+      <Dots {...dragHandleProps}>                       {/* ТАКОЕ ТОЛЬКО НА ЭТАПЕ ПРОТОТИПА! */}
+        ..<br/>
+        ..<br/>
+        ..<br/>
+      </Dots>
       <Wrapper onClick={onClickBlock}>
         <Editor
           ref={editor}
@@ -43,7 +63,7 @@ const EditableBlock = ({ state, addEditableBlock, onChangeEditableBlock }) => {
           onChange={onChangeEditableBlock}
         />
       </Wrapper>
-    </Block>
+    </Component>
   );
 };
 

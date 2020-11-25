@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import styled from "styled-components";
-import EditableBlock from "../components/EditableBlock";
 import {convertToRaw, EditorState} from 'draft-js';
+import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import EditableBlock from "../components/EditableBlock";
 
-const Page = styled.div`
-  
-`;
+const Page = styled.div``;
+const Wrapper = styled.div``;
 
 const MultiDraft = () => {
   const [editableBlocks, setEditableBlocks] = useState([{
@@ -27,20 +27,51 @@ const MultiDraft = () => {
       prevEditableBlocks[index].state = newState;
       return [...prevEditableBlocks];
     });
-    console.log(convertToRaw(newState.getCurrentContent()));
+  };
+  const onDragEnd = (event) => {
+    if (!event.destination) {
+      return;
+    }
+    setEditableBlocks((prevEditableBlocks) => {
+      const currentEditableBlocks = [...prevEditableBlocks];
+      const [current] = currentEditableBlocks.splice(event.source.index, 1);
+      currentEditableBlocks.splice(event.destination.index, 0, current);
+      return currentEditableBlocks;
+    });
   };
 
   return (
-    <Page>
-      {editableBlocks.map(({ id, state }, index) => {
-        return <EditableBlock
-          state={state}
-          addEditableBlock={addEditableBlock(index)}
-          onChangeEditableBlock={onChangeEditableBlock(index)}
-          key={id}
-        />;
-      })}
-    </Page>
+    <DragDropContext onDragEnd={onDragEnd}>
+      <Droppable droppableId="droppable">
+        {(provided) => (
+          <Page
+            ref={provided.innerRef}
+            {...provided.droppableProps}
+          >
+            {editableBlocks.map(({ id, state }, index) => {
+              return (
+                <Draggable draggableId={String(id)} index={index} key={id}>
+                  {(provided) => (
+                    <Wrapper
+                      ref={provided.innerRef}
+                      {...provided.draggableProps}
+                    >
+                      <EditableBlock
+                        state={state}
+                        dragHandleProps={provided.dragHandleProps}
+                        addEditableBlock={addEditableBlock(index)}
+                        onChangeEditableBlock={onChangeEditableBlock(index)}
+                      />
+                    </Wrapper>
+                  )}
+                </Draggable>
+              );
+            })}
+            {provided.placeholder}
+          </Page>
+        )}
+      </Droppable>
+    </DragDropContext>
   );
 };
 
