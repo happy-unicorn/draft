@@ -1,24 +1,19 @@
-import React, { useState, useRef } from "react";
-import { EditorState } from "draft-js";
-import Editor from "draft-js-plugins-editor";
-import "draft-js/dist/Draft.css";
+import React from "react";
+import { Switch, Route, Redirect } from "react-router-dom";
+import Home from "./pages/Home";
+import SingleDraft from "./pages/SingleDraft";
+import MultiDraft from "./pages/MultiDraft";
+import MomentDraft from "./pages/MomentDraft";
 
 const App = () => {
-  const [editorState, setEditorState] = useState(() => EditorState.createEmpty());
-  const editor = useRef(null);
-
-  const onChangeEditor = (newEditorState) => {
-     setEditorState(newEditorState);
-     console.log(newEditorState);
-  };
-
   return (
-    <Editor
-      ref={editor}
-      editorState={editorState}
-      plugins={[]}
-      onChange={onChangeEditor}
-    />
+    <Switch>
+      <Route component={SingleDraft} path="/single-draft" exact/>
+      <Route component={MultiDraft} path="/multi-draft" exact/>
+      <Route component={MomentDraft} path="/moment-draft" exact/>
+      <Route component={Home} path="/" exact/>
+      <Redirect to="/"/>
+    </Switch>
   );
 };
 
