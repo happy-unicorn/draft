@@ -4,6 +4,9 @@
     min-height: 40px;
     padding: 10px 0;
 }
+.component:hover {
+
+}
 .wrapper {
     flex-grow: 1;
     padding-left: 10px;
