@@ -32,6 +32,13 @@ const EditableBlock = ({ state, dragHandleProps, addEditableBlock, onChangeEdita
         ..<br/>
       </div>
       <div className={styles.wrapper} onClick={onClickBlock}>
+        {/*<Editor*/}
+        {/*  ref={editor}*/}
+        {/*  readOnly={!isEditing}*/}
+        {/*  editorState={state}*/}
+        {/*  onChange={onChangeEditableBlock}*/}
+        {/*  onBlur={onBlurBlock}*/}
+        {/*/>*/}
         {isEditing ? <Editor
           ref={editor}
           editorState={state}
