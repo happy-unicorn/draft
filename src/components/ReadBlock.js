@@ -1,10 +1,8 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Editor } from "draft-js";
-import { stateToHTML } from 'draft-js-export-html';
-import parse from 'html-react-parser';
-import styles from "./MomentBlock.module.css";
+import styles from "./ReadBlock.module.css";
 
-const MomentBlock = ({ state, dragHandleProps, addEditableBlock, onChangeEditableBlock }) => {
+const ReadBlock = ({ state, dragHandleProps, addEditableBlock, onChangeEditableBlock }) => {
   const [isEditing, setIsEditing] = useState(false);
   const editor = useRef(null);
 
@@ -32,17 +30,16 @@ const MomentBlock = ({ state, dragHandleProps, addEditableBlock, onChangeEditabl
         ..<br/>
       </div>
       <div className={styles.wrapper} onClick={onClickBlock}>
-        {isEditing ? <Editor
+        <Editor
           ref={editor}
+          readOnly={!isEditing}
           editorState={state}
           onChange={onChangeEditableBlock}
           onBlur={onBlurBlock}
-        /> : <pre>
-          {parse(stateToHTML(state.getCurrentContent()))}
-        </pre>}
+        />
       </div>
     </div>
   );
 };
 
-export default MomentBlock;
+export default ReadBlock;

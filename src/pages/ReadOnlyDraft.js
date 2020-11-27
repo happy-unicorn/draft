@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { EditorState } from 'draft-js';
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { v4 as uuid } from 'uuid';
-import MomentBlock from "../components/MomentBlock";
+import ReadBlock from "../components/ReadBlock";
 
-const MomentDraft = () => {
+const ReadOnlyDraft = () => {
   const [editableBlocks, setEditableBlocks] = useState([{
     id: uuid(),
     state: EditorState.createEmpty()
@@ -56,7 +56,7 @@ const MomentDraft = () => {
                         ref={provided.innerRef}
                         {...provided.draggableProps}
                       >
-                        <MomentBlock
+                        <ReadBlock
                           state={state}
                           dragHandleProps={provided.dragHandleProps}
                           addEditableBlock={addEditableBlock(index)}
@@ -76,4 +76,4 @@ const MomentDraft = () => {
   );
 };
 
-export default MomentDraft;
+export default ReadOnlyDraft;
