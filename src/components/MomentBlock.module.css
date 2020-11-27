@@ -11,7 +11,7 @@
     flex-grow: 1;
     padding-left: 10px;
 }
-.plus {
+.controller {
     display: flex;
     align-items: center;
     justify-content: flex-end;
@@ -23,8 +23,11 @@
     cursor: pointer;
     user-select: none;
 }
-.plus:hover {
+.controller:hover {
     color: gray;
+}
+.minus {
+    width: auto;
 }
 .dots {
     padding-top: 1px;

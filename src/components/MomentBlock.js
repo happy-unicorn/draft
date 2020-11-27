@@ -6,7 +6,7 @@ import styles from "./MomentBlock.module.css";
 import "./MomentBlock.css";
 import { blockStyleMapper } from "../utils/blockStyleMapper";
 
-const MomentBlock = ({ state, dragHandleProps, addEditableBlock, onChangeEditableBlock }) => {
+const MomentBlock = ({ state, dragHandleProps, addEditableBlock, deleteEditableBlock, onChangeEditableBlock }) => {
   const [isEditing, setIsEditing] = useState(false);
   const editor = useRef(null);
 
@@ -25,8 +25,11 @@ const MomentBlock = ({ state, dragHandleProps, addEditableBlock, onChangeEditabl
 
   return (
     <div className={styles.component}>
-      <div className={styles.plus} onClick={addEditableBlock}>
+      <div className={styles.controller} onClick={addEditableBlock}>
         +
+      </div>
+      <div className={`${styles.controller} ${styles.minus}`} onClick={deleteEditableBlock}>
+        -
       </div>
       <div className={styles.dots} {...dragHandleProps}>
         ..<br/>

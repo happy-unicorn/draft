@@ -10,14 +10,23 @@ const MomentDraft = () => {
     state: EditorState.createEmpty()
   }]);
 
-  const addEditableBlock = (index) => () => {
+  const addEditableBlock = (id) => () => {
     setEditableBlocks((prevEditableBlocks) => {
+      const index = prevEditableBlocks.findIndex(block => block.id === id);
       const newBlock = {
         id: uuid(),
         state: EditorState.createEmpty()
       };
       return [...prevEditableBlocks.slice(0, index + 1), newBlock, ...prevEditableBlocks.slice(index + 1)];
     });
+  };
+  const deleteEditableBlock = (id) => () => {
+    if (editableBlocks.length > 1) {
+      setEditableBlocks((prevEditableBlocks) => {
+      const index = prevEditableBlocks.findIndex(block => block.id === id);
+      return [...prevEditableBlocks.slice(0, index), ...prevEditableBlocks.slice(index + 1)];
+    });
+    }
   };
   const onChangeEditableBlock = (id) => (newState) => {
     setEditableBlocks((prevEditableBlocks) => {
@@ -59,7 +68,8 @@ const MomentDraft = () => {
                         <MomentBlock
                           state={state}
                           dragHandleProps={provided.dragHandleProps}
-                          addEditableBlock={addEditableBlock(index)}
+                          addEditableBlock={addEditableBlock(id)}
+                          deleteEditableBlock={deleteEditableBlock(id)}
                           onChangeEditableBlock={onChangeEditableBlock(id)}
                         />
                       </div>
