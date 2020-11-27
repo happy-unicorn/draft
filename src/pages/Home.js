@@ -19,6 +19,9 @@ const Home = () => {
       <Link to="/moment-draft">
         Go to moment-draft
       </Link>
+      <Link to="/read-only-draft">
+        Go to read-only-draft
+      </Link>
     </Page>
   );
 };
